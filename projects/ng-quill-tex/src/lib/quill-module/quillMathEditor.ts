@@ -82,7 +82,7 @@ export default class QuillMathEditor extends Module {
     showMathsPalatte(quill) {
 
         let buttons;
-        const mathsOption = this.options.applicationSettings.quill_options.maths;
+        const mathsOption = this.options.mathOptions.quill_options.maths;
 
         const elementMathArea = document.createElement('div');
         const range = quill.getSelection();
