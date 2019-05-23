@@ -99,10 +99,10 @@ quillConfig = {
  }
 
 // Image Upload
- fileuploaded(file) {
+  fileUploaded(quillImageUpload: QuillImageUpload) {
     // Image upload in code in server side
-    console.log('file uploaded', file);
-    this.quillImageUrl = 'https://dummyimage.com/50/000/fff';
+    console.log(quillImageUpload.file);
+    quillImageUpload.setImage('https://dummyimage.com/50/000/fff');
   }
 
 ```
@@ -112,7 +112,7 @@ quillConfig = {
 
 <div>
     <ng-quill-tex [modules]="quillConfig" (textChanged)="onTextChanged($event)" 
-    (fileuploaded)="fileuploaded($event)" [imageUrl]="quillImageUrl" [group]="formGroup" [controlName]="'controlName'">
+    (fileUploaded)="fileUploaded($event)" [imageUrl]="quillImageUrl" [group]="formGroup" [controlName]="'controlName'">
     </ng-quill-tex>  
 </div>
 

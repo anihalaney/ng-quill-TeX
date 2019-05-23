@@ -7,11 +7,8 @@ class FormulaBlot extends Embed {
   static blotName =  'formula';
   static className = 'ql-formula';
   static tagName = 'SPAN';
-
-  text;
+  private text: string;
   statics;
-  className;
-  tagName;
 
   static create(value) {
     const node = super.create(value);

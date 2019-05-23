@@ -5,21 +5,21 @@ import { debounceTime } from 'rxjs/operators';
 import { QuillInitializeService } from './services/quillInitialize.service';
 import BlotFormatter from 'quill-blot-formatter';
 import { ImageUpload } from 'quill-image-upload';
-import { FormGroup } from '@angular/forms';
-
+import { FormGroup, FormControl } from '@angular/forms';
+import { QuillImageUpload } from './models/quill-image-upload';
 @Component({
   selector: 'ng-quill-tex',
   templateUrl: './ng-quill-tex.component.html',
   styles: []
 })
-export class NgQuillTexComponent implements OnInit {
+export class NgQuillTexComponent implements OnInit, QuillImageUpload {
 
   @Input() modules;
   @Input() _imageUrl;
   @Output() textChanged = new EventEmitter<any>();
-  @Output() fileuploaded = new EventEmitter<any>();
+  @Output() fileUploaded = new EventEmitter<QuillImageUpload>();
   @Input() group?: FormGroup;
-  @Input() controlName?: string;
+  @Input() controlName?: FormControl;
 
   quillEditorRef;
 
@@ -43,7 +43,7 @@ export class NgQuillTexComponent implements OnInit {
 
     this.modules.imageUpload = {
       customUploader: (file) => {
-        this.onfileuploaded(file);
+        this.onfileUploaded(file);
       }
     };
 
@@ -54,7 +54,7 @@ export class NgQuillTexComponent implements OnInit {
           debounceTime(400),
         )
         .subscribe((data) => {
-          this.onTextChanged({ 'html': data.html, 'delta': data.content.ops});
+          this.onTextChanged({ 'html': data.html, 'delta': data.content.ops });
         });
     }, 0);
   }
@@ -67,8 +67,10 @@ export class NgQuillTexComponent implements OnInit {
     this.textChanged.emit(html);
   }
 
-  onfileuploaded(file: File): void {
-    this.fileuploaded.emit(file);
+  onfileUploaded(file: File): void {
+    const quillImageUpload: QuillImageUpload = { file: file, setImage: this.setImage };
+    quillImageUpload.file = file;
+    this.fileUploaded.emit(quillImageUpload);
   }
 
   get imageUrl(): string {
@@ -77,18 +79,21 @@ export class NgQuillTexComponent implements OnInit {
 
   @Input()
   set imageUrl(fileName: string) {
-
-    if (fileName && (this._imageUrl !== fileName)) {
-      const range = this.quillEditorRef.getSelection();
-      const imageIndex = range.index;
-      this.quillEditorRef.insertEmbed(imageIndex, 'image', fileName);
-      const newRange = this.quillEditorRef.getSelection();
-      const newimageIndex = newRange.index;
-      this.quillEditorRef.setSelection(newimageIndex, Quill.sources.SILENT);
+    if (fileName) {
+      this.displayImage(this.quillEditorRef, fileName);
     }
     this._imageUrl = fileName;
   }
 
 
+  setImage = (imageUrl: string) => {
+    this.displayImage(this.quillEditorRef, imageUrl);
+  }
 
+
+  displayImage(quillEditorRef, imageUrl) {
+    const range = quillEditorRef.getSelection();
+    const imageIndex = range.index;
+    quillEditorRef.insertEmbed(imageIndex, 'image', imageUrl);
+  }
 }
