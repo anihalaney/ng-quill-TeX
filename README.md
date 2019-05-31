@@ -34,7 +34,7 @@ Angular Quill library with Math quill and more
 ```ts
 "styles": [
   "styles.scss",
-  "node_modules/ngx-toastr/toastr.css" // try adding '../' if you're using angular cli before 6
+    "./node_modules/ng-quill-tex/assets/theme.css" // try adding '../' if you're using angular cli before 6
 ]
 ```
 

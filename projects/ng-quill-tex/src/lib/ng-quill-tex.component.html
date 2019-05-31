@@ -1,9 +1,23 @@
-<div [formGroup]="group" *ngIf="group">
+<div [formGroup]="group" *ngIf="group else noGroup">
+  <label> group </label>
   <quill-editor [modules]="modules" #quillEditior trackChanges="all" format="object" (onEditorCreated)="getEditorInstance($event)"
     [formControlName]="controlName">
   </quill-editor>
 </div>
-<div *ngIf="!group">
-  <quill-editor [modules]="modules" #quillEditior trackChanges="all" format="object" (onEditorCreated)="getEditorInstance($event)">
-  </quill-editor>
-</div>
+
+<!-- <ng-template #formArrayName>
+  <label> formArray </label>
+  <div [formGroupName]="formArrayName" *ngIf="formArrayName else noGroup">
+    <quill-editor [modules]="modules" #quillEditior trackChanges="all" format="object" (onEditorCreated)="getEditorInstance($event)"
+      [formControlName]="controlName">
+    </quill-editor>
+  </div>
+</ng-template> -->
+
+
+<ng-template #noGroup>
+  <div *ngIf="!group">
+    <quill-editor [modules]="modules" #quillEditior trackChanges="all" format="object" (onEditorCreated)="getEditorInstance($event)" [(ngModel)]="editorContent" >
+    </quill-editor>
+  </div>
+</ng-template>

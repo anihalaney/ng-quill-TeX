@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { QuillEditorComponent } from 'ngx-quill';
 import Quill from 'quill';
 import { debounceTime } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import BlotFormatter from 'quill-blot-formatter';
 import { ImageUpload } from 'quill-image-upload';
 import { FormGroup, FormControl } from '@angular/forms';
 import { QuillImageUpload } from './models/quill-image-upload';
+
 @Component({
   selector: 'ng-quill-tex',
   templateUrl: './ng-quill-tex.component.html',
@@ -20,11 +21,14 @@ export class NgQuillTexComponent implements OnInit, QuillImageUpload {
   @Output() fileUploaded = new EventEmitter<QuillImageUpload>();
   @Input() group?: FormGroup;
   @Input() controlName?: FormControl;
+  @Input() content?: any;
+  @Input() editorContent: any;
 
   quillEditorRef;
 
   @ViewChild('quillEditior') quillEditior: QuillEditorComponent;
-  constructor(private quillInitializeService: QuillInitializeService) {
+  constructor(private quillInitializeService: QuillInitializeService,
+    private cd: ChangeDetectorRef) {
 
     this.modules = {
       toolbar: {
@@ -61,6 +65,16 @@ export class NgQuillTexComponent implements OnInit, QuillImageUpload {
 
   getEditorInstance(editorInstance: any) {
     this.quillEditorRef = editorInstance;
+    if (this.content) {
+      console.log('set contentdd');
+      setTimeout(() => {
+        this.editorContent = this.content;
+        this.cd.markForCheck();
+      }, 10);
+
+      // this.quillEditorRef.content = this.content;
+      // this.quillEditorRef.content(this.content);
+    }
   }
 
   onTextChanged(html: any) {

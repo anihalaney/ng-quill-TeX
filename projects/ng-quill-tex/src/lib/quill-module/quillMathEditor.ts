@@ -43,6 +43,7 @@ export default class QuillMathEditor extends Module {
         this.quill.getModule('toolbar').addHandler('mathEditor', () => {
             const range = quill.getSelection();
             [this.existingFomula, this.offset] = this.quill.scroll.descendant(FormulaBlot, range.index);
+            console.log('maths', this.existingFomula);
             this.checkMathsDialogOpen();
         });
     }
@@ -236,6 +237,7 @@ export default class QuillMathEditor extends Module {
                 delta = [{ retain: rangeIndex }];
                 // }
                 delta = [...delta, { insert: { formula: latexString } }];
+                // delta = [...delta, { insert: { formula: '6\\sqrt{-753+\\sqrt{355}}'  }}];
                 quill.updateContents(delta);
                 quill.focus();
             }
