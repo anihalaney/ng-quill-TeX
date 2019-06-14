@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { QuillEditorComponent } from 'ngx-quill';
 import Quill from 'quill';
 import { debounceTime } from 'rxjs/operators';
 import { QuillInitializeService } from './services/quillInitialize.service';
 import BlotFormatter from 'quill-blot-formatter';
-import { ImageUpload } from 'quill-image-upload';
 import { FormGroup, FormControl } from '@angular/forms';
 import { QuillImageUpload } from './models/quill-image-upload';
 
@@ -23,23 +22,21 @@ export class NgQuillTexComponent implements OnInit, QuillImageUpload {
   @Input() controlName?: FormControl;
   @Input() content?: any;
   @Input() editorContent: any;
+  @Input() isMobile: boolean;
 
   quillEditorRef;
 
   @ViewChild('quillEditior') quillEditior: QuillEditorComponent;
   constructor(private quillInitializeService: QuillInitializeService,
     private cd: ChangeDetectorRef) {
-
     this.modules = {
       toolbar: {
         container: [
           ['bold', 'italic', 'underline', 'strike', 'code'],
           [{ 'color': [] }],
         ]
-      }
+      },
     };
-
-    Quill.register('modules/imageUpload', ImageUpload);
     Quill.register('modules/blotFormatter', BlotFormatter);
   }
 
@@ -47,8 +44,13 @@ export class NgQuillTexComponent implements OnInit, QuillImageUpload {
 
     this.modules.imageUpload = {
       customUploader: (file) => {
-        this.onfileUploaded(file);
-      }
+        this.onfileUploaded(false, file);
+      },
+      mobileUploader: () => {
+        this.onfileUploaded(true);
+
+      },
+      isMobile: this.isMobile
     };
 
     setTimeout(() => {
@@ -66,14 +68,10 @@ export class NgQuillTexComponent implements OnInit, QuillImageUpload {
   getEditorInstance(editorInstance: any) {
     this.quillEditorRef = editorInstance;
     if (this.content) {
-      console.log('set contentdd');
       setTimeout(() => {
         this.editorContent = this.content;
         this.cd.markForCheck();
       }, 10);
-
-      // this.quillEditorRef.content = this.content;
-      // this.quillEditorRef.content(this.content);
     }
   }
 
@@ -81,8 +79,8 @@ export class NgQuillTexComponent implements OnInit, QuillImageUpload {
     this.textChanged.emit(html);
   }
 
-  onfileUploaded(file: File): void {
-    const quillImageUpload: QuillImageUpload = { file: file, setImage: this.setImage };
+  onfileUploaded(isMobile: boolean, file?: File, ): void {
+    const quillImageUpload: QuillImageUpload = { file: file, setImage: this.setImage, isMobile: isMobile };
     quillImageUpload.file = file;
     this.fileUploaded.emit(quillImageUpload);
   }
@@ -110,4 +108,5 @@ export class NgQuillTexComponent implements OnInit, QuillImageUpload {
     const imageIndex = range.index;
     quillEditorRef.insertEmbed(imageIndex, 'image', imageUrl);
   }
+
 }
