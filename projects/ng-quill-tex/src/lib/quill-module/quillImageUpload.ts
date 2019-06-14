@@ -23,9 +23,7 @@ export class QuillImageUpload {
     constructor(quill, options = {}) {
         // save the quill reference
         this.quill = quill;
-        console.log(JSON.stringify(options));
         this.isMobile = options['isMobile'];
-        console.log(this.isMobile);
         // save options
         this.options = options;
         // listen for drop and paste events
@@ -38,17 +36,12 @@ export class QuillImageUpload {
 	 * Select local image
 	 */
     selectLocalImage() {
-        console.log(this.options);
         if (this.isMobile) {
             if (this.options.mobileUploader) {
-                console.log('image uplo');
                 this.options.mobileUploader( () => {
-                    // this.insert(dataUrl);
-                    console.log('mobile 53');
                 });
             }
         } else {
-            console.log('image uplo');
             const input = document.createElement('input');
             input.setAttribute('type', 'file');
             input.click();

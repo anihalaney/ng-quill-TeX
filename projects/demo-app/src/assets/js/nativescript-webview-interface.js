@@ -1,9 +1,7 @@
 /**
  * WebViewInterface class to handle communication between webView and Android/iOS.
  */
-console.log('tester');
 var NSWebViewinterface = (function () {
-    console.log('tester');
     function NSWebViewinterface() {
         
         /**

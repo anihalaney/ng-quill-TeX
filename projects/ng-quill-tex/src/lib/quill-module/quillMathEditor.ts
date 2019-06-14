@@ -43,7 +43,6 @@ export default class QuillMathEditor extends Module {
         this.quill.getModule('toolbar').addHandler('mathEditor', () => {
             const range = quill.getSelection();
             [this.existingFomula, this.offset] = this.quill.scroll.descendant(FormulaBlot, range.index);
-            console.log('maths', this.existingFomula);
             this.checkMathsDialogOpen();
         });
     }

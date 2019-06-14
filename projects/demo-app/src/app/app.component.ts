@@ -52,14 +52,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   };
 
   constructor(private cd: ChangeDetectorRef, private ngZone: NgZone) {
-    console.log('updated 55');
   }
 
   // Text change in quill editor
   onTextChanged(text) {
     this.ngZone.run(() => {
       text.answerIndex = this.answerIndex;
-      console.log(text);
       this.oWebViewInterface.emit('quillContent', text);
       this.cd.detectChanges();
     });
@@ -84,12 +82,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
       this.oWebViewInterface.on('deltaObject', (deltaObject) => {
         this.ngZone.run(() => {
-          // this.quillImageUrl = url;
-          console.log(deltaObject);
           this.show = false;
           this.editorContent = deltaObject;
-          console.log('delta updated>', deltaObject);
-          console.log(deltaObject);
           this.cd.detectChanges();
           this.show = true;
         });
