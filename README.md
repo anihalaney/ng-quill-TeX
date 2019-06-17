@@ -15,7 +15,7 @@ Angular Quill library with Math quill and more
 
 ```
 
--- copy and past dist folder into your project root folder
+-- copy and paste dist folder into your project root folder
 
 
 -- Install ng-quill-tex into your project
@@ -62,12 +62,12 @@ export class AppModule { }
       maths: [{
         cmd: 'sqrt', // Math quill 
         name: 'Square Root',
-        url: '' // Image url of maths function
+        url: '' // image url of sqrt as button icon
       },
       {
         cmd: 'pm',
         name: 'Plus Minus',
-        url: '' // Image url of maths function
+        url: '' // mage url of plug minus as button icon
       },
       ]
     }

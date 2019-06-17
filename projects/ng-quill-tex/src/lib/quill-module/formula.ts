@@ -31,13 +31,6 @@ class FormulaBlot extends Embed {
     this.text = this.statics.value(node);
   }
 
-  // length() {
-  //   return this.text.length;
-  // }
-
-  // value() {
-  //   return this.text;
-  // }
 }
 
 FormulaBlot.blotName = 'formula';

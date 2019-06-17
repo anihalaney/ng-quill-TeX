@@ -5,4 +5,4 @@ export interface QuillImageUpload {
     isMobile?: boolean;
     setImage(name: String): void;
 
-};
+}

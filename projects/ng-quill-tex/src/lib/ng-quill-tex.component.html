@@ -5,16 +5,6 @@
   </quill-editor>
 </div>
 
-<!-- <ng-template #formArrayName>
-  <label> formArray </label>
-  <div [formGroupName]="formArrayName" *ngIf="formArrayName else noGroup">
-    <quill-editor [modules]="modules" #quillEditior trackChanges="all" format="object" (onEditorCreated)="getEditorInstance($event)"
-      [formControlName]="controlName">
-    </quill-editor>
-  </div>
-</ng-template> -->
-
-
 <ng-template #noGroup>
   <div *ngIf="!group">
     <quill-editor [modules]="modules" #quillEditior trackChanges="all" format="object" (onEditorCreated)="getEditorInstance($event)" [(ngModel)]="editorContent" >
