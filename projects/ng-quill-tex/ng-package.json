@@ -1,0 +1,16 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/ng-quill-tex",
+  "lib": {
+    "entryFile": "src/public_api.ts",
+    "umdModuleIds": {
+      "quill": "quill",
+      "quill-blot-formatter": "quill-blot-formatter",
+      "ngx-quill": "ngx-quill",
+      "quill-image-upload":"quill-image-upload"
+    }
+  },
+  "whitelistedNonPeerDependencies": [
+    "ngx-quill","quill"
+  ]
+}
