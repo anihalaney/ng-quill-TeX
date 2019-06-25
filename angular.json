@@ -58,10 +58,19 @@
               "projects/demo-app/src/assets"
             ],
             "styles": [
-              "projects/demo-app/src/styles.css"
+              "projects/demo-app/src/styles.css",
+              "./node_modules/mathquill/formula/formula.css",
+              "./node_modules/katex/dist/katex.css",
+              "./node_modules/highlightjs/styles/arta.css",
+              "./node_modules/quill/dist/quill.snow.css"
             ],
-            // added nativescript webview interface to communicate with editor in webview 
-            "scripts": ["projects/demo-app/src/assets/js/nativescript-webview-interface.js"]
+            "scripts": [
+              "projects/demo-app/src/assets/js/nativescript-webview-interface.js",
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/mathquill/build/mathquill.min.js",
+              "./node_modules/highlightjs/highlight.pack.min.js",
+              "./node_modules/katex/dist/katex.min.js"
+            ]
           },
           "configurations": {
             "production": {

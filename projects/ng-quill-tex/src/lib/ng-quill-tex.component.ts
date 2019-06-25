@@ -41,11 +41,13 @@ export class NgQuillTexComponent implements OnInit, QuillImageUpload {
   }
 
   ngOnInit() {
-
+    // Register handler
     this.modules.imageUpload = {
+      // web upload image handler
       customUploader: (file) => {
         this.onfileUploaded(false, file);
       },
+      // mobile upload image handler
       mobileUploader: () => {
         this.onfileUploaded(true);
 
@@ -53,6 +55,7 @@ export class NgQuillTexComponent implements OnInit, QuillImageUpload {
       isMobile: this.isMobile
     };
 
+    // When editor's content change emit it's html and delta content.
     setTimeout(() => {
       this.quillEditior
         .onContentChanged
@@ -65,6 +68,7 @@ export class NgQuillTexComponent implements OnInit, QuillImageUpload {
     }, 0);
   }
 
+  // Get Editor instatnce when editor is created
   getEditorInstance(editorInstance: any) {
     this.quillEditorRef = editorInstance;
     if (this.content) {
@@ -79,7 +83,11 @@ export class NgQuillTexComponent implements OnInit, QuillImageUpload {
     this.textChanged.emit(html);
   }
 
-  onfileUploaded(isMobile: boolean, file?: File, ): void {
+  // Emit the file and and  callback function to set image in editor
+  // If Image is uploading in web so we have image object so it is optional
+  // Ismobile:  pass parameter because for mobile we selecting image from mobile.
+  // setImage: callback function to set image
+  onfileUploaded(isMobile: boolean, file?: File): void {
     const quillImageUpload: QuillImageUpload = { file: file, setImage: this.setImage, isMobile: isMobile };
     quillImageUpload.file = file;
     this.fileUploaded.emit(quillImageUpload);
@@ -102,7 +110,7 @@ export class NgQuillTexComponent implements OnInit, QuillImageUpload {
     this.displayImage(this.quillEditorRef, imageUrl);
   }
 
-
+  // Set the image in quill editor
   displayImage(quillEditorRef, imageUrl) {
     const range = quillEditorRef.getSelection();
     const imageIndex = range.index;
